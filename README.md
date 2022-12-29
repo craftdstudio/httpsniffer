@@ -10,12 +10,21 @@ It builds on the battle-hardened [gopacket](https://github.com/google/gopacket/b
 ```go
 
 func main() {
-    sniffer := New()
+    device := "eth0"
+    port := 80
+    sniffer := New(device, port)
+
+    // you can register as many handlers you want
+    // httpsniffer will chain the request through them in the order they were registered
+    // the output of each handler will the input of the next handler
     sniffer.Register(func(txn *Transaction) (*Transaction, error) {
         fmt.Println(txn.Request)
         fmt.Println(txn.Response)
         return txn, nil
     })
+
+    // starts the sniffing for HTTP request on device eth0 and port 80
+    sniffer.Listen()
 }
 
 ```
