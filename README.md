@@ -8,3 +8,18 @@ It builds on the battle-hardened [gopacket](https://github.com/google/gopacket/b
 - Generate telemtry data, a la openTelemtry traces.
 - ... generally speaking an automagically tool that gives insights on how your API is performing.
 
+
+
+### HTTP Sniffer middleware
+```go
+
+func main() {
+    sniffer := New()
+    sniffer.Register(func(txn *Transaction) (*Transaction, error) {
+        fmt.Println(txn.Request)
+        fmt.Println(txn.Response)
+        return txn, nil
+    })
+}
+
+```

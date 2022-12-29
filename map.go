@@ -1,7 +1,6 @@
-package main
+package sniffer
 
 import (
-	"log"
 	"net/http"
 	"sync"
 )
@@ -14,7 +13,6 @@ type Map struct {
 var reqRes = NewMap()
 
 func NewMap() *Map {
-	log.Println("new map")
 	return &Map{
 		reqRes: map[string]*http.Request{},
 	}
@@ -31,4 +29,10 @@ func (m *Map) Get(key string) (*http.Request, bool) {
 	defer m.RUnlock()
 	req, ok := m.reqRes[key]
 	return req, ok
+}
+
+func (m *Map) Delete(key string) {
+	m.Lock()
+	delete(m.reqRes, key)
+	m.Unlock()
 }
