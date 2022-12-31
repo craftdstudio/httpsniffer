@@ -1,4 +1,4 @@
-module github.com/lafikl/httpsniffer
+module github.com/craftdstudio/httpsniffer
 
 go 1.19
 
